@@ -107,21 +107,22 @@ find_package(DFUSuffix)
 ## run dfu-suffix to append DFU stuff and signature; generate relevant flash-* target
 # TODO ? : run with execute_proces(... OUTPUT_QUIET ) instead of '... 1>/dev/null'
 
+find_package(DFUUtil)
+
 function(dfu_flash target)
 	if (DFU_SUFFIX_EXECUTABLE)
 		add_custom_command( TARGET ${target}
 			BYPRODUCTS ${target}.dfu
 			COMMAND ${CMAKE_OBJCOPY} -O binary ${target} ${target}.dfu
-			COMMAND ${DFU_SUFFIX_EXECUTABLE} --add ${target}.dfu --vid 1d50 --pid 606f 1>/dev/null
+			COMMAND ${DFU_SUFFIX_EXECUTABLE} --add ${target}.dfu --vid 1d50 --pid 606f
 			COMMENT "create and sign dfu bin file: ${TGTNAME}_fw"
 		)
-
 		add_custom_target( flash-${target}
-			dfu-util -a 0 -R -s 0x08000000 -D ${target}.dfu
+			${DFU_UTIL_EXECUTABLE} -a 0 -R -s 0x08000000 -D ${target}.dfu
 		)
 	else()
 		add_custom_target( flash-${target}
-			dfu-util -d 1d50:606f -a 0 -R -s 0x08000000 -D ${target}.bin
+			${DFU_UTIL_EXECUTABLE} -d 1d50:606f -a 0 -R -s 0x08000000 -D ${target}.bin
 		)
 	endif()
 endfunction()

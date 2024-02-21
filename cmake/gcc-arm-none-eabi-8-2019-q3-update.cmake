@@ -1,7 +1,7 @@
 set(TOOLCHAIN gcc-arm-none-eabi-8-2019-q3-update)
 find_path(
     TOOLCHAIN_BIN_DIR
-    arm-none-eabi-gcc
+    arm-none-eabi-gcc.exe
     HINTS
         $ENV{HOME}/bin/${TOOLCHAIN}/bin
         $ENV{HOME}/opt/${TOOLCHAIN}/bin
@@ -14,8 +14,8 @@ find_path(
 set(CMAKE_SYSTEM_NAME Generic)
 set(CMAKE_SYSTEM_PROCESSOR arm)
 
-set(CMAKE_C_COMPILER "${TOOLCHAIN_BIN_DIR}/arm-none-eabi-gcc" CACHE INTERNAL "")
-set(CMAKE_CXX_COMPILER "${TOOLCHAIN_BIN_DIR}/arm-none-eabi-g++" CACHE INTERNAL "")
+set(CMAKE_C_COMPILER "${TOOLCHAIN_BIN_DIR}/arm-none-eabi-gcc.exe" CACHE INTERNAL "")
+set(CMAKE_CXX_COMPILER "${TOOLCHAIN_BIN_DIR}/arm-none-eabi-g++.exe" CACHE INTERNAL "")
 set(CMAKE_EXE_LINKER_FLAGS "" CACHE INTERNAL "")
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)
